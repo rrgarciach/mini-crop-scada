@@ -1,0 +1,17 @@
+{
+  "name": "mini-crop-scada",
+  "version": "1.0.0",
+  "description": "SCADA system for mini aquaponics systems.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "mqtt": "^3.0.0",
+    "node-dht-sensor": "^0.3.0",
+    "rpi-gpio": "^2.1.3"
+  }
+}
