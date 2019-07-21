@@ -4,7 +4,7 @@ function read(pin, dhtType = 22) {
 
   return sensor.read(dhtType, pin)
     .then(data => {
-      return Promise({
+      return Promise.resolve({
         temperature: data.temperature.toFixed(2),
         humidity: data.humidity.toFixed(2),
       });
