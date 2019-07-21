@@ -1,11 +1,11 @@
 const gpio = require('rpi-gpio');
 const gpiop = gpio.promise;
 
-gpiop.setup(7, gpio.DIR_OUT)
+gpiop.setup(29, gpio.DIR_OUT)
   .then(() => {
-    return gpiop.write(7, true);
+    return gpiop.write(29, true);
   })
-  .then(() => setTimeout(() => gpiop.write(7, false), 1000))
+  .then(() => setTimeout(() => gpiop.write(29, true), 1000))
   .catch(err => {
     console.log(err.toString());
   });
