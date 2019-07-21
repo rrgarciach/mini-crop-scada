@@ -61,9 +61,9 @@ async function turnOff() {
 }
 
 const CronJob = require('cron').CronJob;
-new CronJob('50 3 * * * *', async function () {
+new CronJob('* 57 3 * * *', async function () {
   await turnOn();
 });
-new CronJob('* 0 * * * *', async function () {
+new CronJob('* * 0 * * *', async function () {
   await turnOff();
 });
