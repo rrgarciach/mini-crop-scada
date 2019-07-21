@@ -41,14 +41,16 @@ client.on('connect', async function () {
 
 });
 
-client.on('message', async function (topic, message) {
+client.on('message', async function (topic, payload) {
 
-  console.log(`Topic ${topic} request.topic: ${topic}`);
-  console.log(`Message: ${message.toString()}`);
+  console.log(`Topic ${topic}`);
+  console.log(`Message: ${payload.toString()}`);
 
+  const message = JSON.parse(payload.toString());
 
   if (message.method === 'setGpioStatus') {
     const {pin, enabled} = message.params;
+    console.log('setGpioStatus received!', pin, enabled)
 
     const actuator = require('@actuators/gpio.actuator.js')(pin);
     try {
@@ -72,5 +74,5 @@ function getGpioStatus() {
 }
 
 function setGpioStatus(pin, status) {
-  if (gpioState['p' + pin] !== undefined) gpioState['p' + pin] = status;
+  gpioState['p' + pin] = status;
 }
