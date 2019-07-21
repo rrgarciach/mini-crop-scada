@@ -17,18 +17,13 @@ const client = mqtt.connect('mqtt://' + MQTT_HOST, {
 client.on('connect', async function () {
   console.log(`Client Grow Lights ${ACCESS_TOKEN} connected to ${MQTT_HOST}!`);
 
-  // client.publish('v1/devices/me/attributes', 'temperature');
-  // console.log('Attributes published!');
+  client.subscribe('v1/devices/me/attributes', err => {
+    if (err) throw err;
+    client.publish('v1/devices/me/attributes', 'temperature');
+    console.log('Attributes published!');
+  });
   client.subscribe('v1/devices/me/rpc/request/+', err => {
     if (err) throw err;
-    const requestId = 1;
-    const request = {
-      "method": "setGrowLights",
-      "params": {
-        state: 'on',
-      }
-    };
-    client.publish('v1/devices/me/rpc/request/' + requestId, JSON.stringify(request));
   });
 
 });
