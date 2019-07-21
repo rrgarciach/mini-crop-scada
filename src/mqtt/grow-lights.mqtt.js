@@ -21,6 +21,14 @@ client.on('connect', async function () {
   // console.log('Attributes published!');
   client.subscribe('v1/devices/me/rpc/request/+', err => {
     if (err) throw err;
+    const requestId = 1;
+    const request = {
+      "method": "setGrowLights",
+      "params": {
+        state: 'on',
+      }
+    };
+    client.publish('v1/devices/me/rpc/request/' + requestId, JSON.stringify(request));
   });
 
 });
