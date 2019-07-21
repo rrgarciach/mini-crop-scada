@@ -35,7 +35,7 @@ client.on('message', async function (topic, message) {
 
   const requestId = topic.slice('v1/devices/me/rpc/request/'.length);
   //client acts as an echo service
-  client.publish('v1/devices/me/rpc/response/' + requestId, message);
+  client.publish('v1/devices/me/rpc/response/' + requestId, JSON.stringify(message));
 
   if (message.method === 'setGrowLights') {
     const {state} = message.params;
