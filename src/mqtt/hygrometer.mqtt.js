@@ -19,7 +19,11 @@ client.on('connect', async function () {
 });
 
 async function readSensor() {
-  const data = await sensor.read(4);
+  const {temperature, humidity} = await sensor.read(4);
+  const data = {
+    temperature: temperature.toFixed(2),
+    humidity: humidity.toFixed(2),
+  };
   console.log(data.temperature, data.humidity);
 
   client.publish('v1/devices/me/telemetry', JSON.stringify(data));
