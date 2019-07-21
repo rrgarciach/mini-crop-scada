@@ -5,23 +5,23 @@ const MQTT_PORT = process.env.THINGSBOARD_PORT || 1883;
 const ACCESS_TOKEN = process.env.GPIO_ACCESS_TOKEN;
 
 let gpioState = {
-  p7: false,
-  p11: false,
-  p12: false,
-  p13: false,
-  p15: false,
-  p16: false,
-  p18: false,
-  p22: false,
-  p29: false,
-  p31: false,
-  p32: false,
-  p33: false,
-  p35: false,
-  p36: false,
-  p37: false,
-  p38: false,
-  p40: false,
+  '7': false,
+  '11': false,
+  '12': false,
+  '13': false,
+  '15': false,
+  '16': false,
+  '18': false,
+  '22': false,
+  '29': false,
+  '31': false,
+  '32': false,
+  '33': false,
+  '35': false,
+  '36': false,
+  '37': false,
+  '38': false,
+  '40': false,
 };
 
 console.log(`Connecting to: ${MQTT_HOST}:${MQTT_PORT} using access token: ${ACCESS_TOKEN}...`);
@@ -74,5 +74,5 @@ function getGpioStatus() {
 }
 
 function setGpioStatus(pin, status) {
-  gpioState['p' + pin] = status;
+  gpioState[pin] = status;
 }
