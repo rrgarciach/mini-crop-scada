@@ -50,7 +50,7 @@ client.on('message', async function (topic, message) {
   if (message.method === 'setGpioStatus') {
     const {pin, enabled} = message.params;
 
-    const actuator = require('@actuators/pinout.actuator.js')(pin);
+    const actuator = require('@actuators/gpio.actuator.js')(pin);
     try {
       if (enabled)
         await actuator.turnOn();
