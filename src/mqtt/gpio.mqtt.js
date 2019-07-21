@@ -72,5 +72,5 @@ function getGpioStatus() {
 }
 
 function setGpioStatus(pin, status) {
-  if (gpioState['p' + pin]) gpioState['p' + pin] = status;
+  if (gpioState['p' + pin] !== undefined) gpioState['p' + pin] = status;
 }
