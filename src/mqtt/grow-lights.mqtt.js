@@ -17,11 +17,11 @@ const client = mqtt.connect('mqtt://' + MQTT_HOST, {
 client.on('connect', async function () {
   console.log(`Client Grow Lights ${ACCESS_TOKEN} connected to ${MQTT_HOST}!`);
 
-  client.subscribe('v1/devices/me/attributes', err => {
-    if (err) throw err;
-    client.publish('v1/devices/me/attributes', 'temperature');
-    console.log('Attributes published!');
-  });
+  // client.subscribe('v1/devices/me/attributes', err => {
+  //   if (err) throw err;
+  //   client.publish('v1/devices/me/attributes', 'temperature');
+  //   console.log('Attributes published!');
+  // });
   client.subscribe('v1/devices/me/rpc/request/+', err => {
     if (err) throw err;
   });
@@ -59,3 +59,11 @@ async function turnOff() {
   await actuator.turnOff();
   console.log(`Turned OFF Grow Lights ${ACCESS_TOKEN}`);
 }
+
+const CronJob = require('cron').CronJob;
+new CronJob('50 3 * * * *', async function () {
+  await turnOn();
+});
+new CronJob('* 0 * * * *', async function () {
+  await turnOff();
+});
