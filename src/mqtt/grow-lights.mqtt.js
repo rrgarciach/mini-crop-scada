@@ -15,7 +15,7 @@ const client = mqtt.connect('mqtt://' + MQTT_HOST, {
 });
 
 client.on('connect', async function () {
-  console.log(`Client ${MQTT_HOST} connected!`);
+  console.log(`Client Grow Lights ${ACCESS_TOKEN} connected to ${MQTT_HOST}!`);
 
   // client.publish('v1/devices/me/attributes', 'temperature');
   // console.log('Attributes published!');
@@ -23,8 +23,8 @@ client.on('connect', async function () {
 
   client.on('message', async function (topic, message) {
 
-    console.log('request.topic: ' + topic);
-    console.log('request.body: ' + message.toString());
+    console.log(`Grow Lights ${ACCESS_TOKEN} request.topic: ${topic}`);
+    console.log(`Grow Lights ${ACCESS_TOKEN} request.body: ${message.toString()}`);
 
     const requestId = topic.slice('v1/devices/me/rpc/request/'.length);
 
@@ -47,10 +47,10 @@ client.on('connect', async function () {
 
 async function turnOn() {
   await actuator.turnOn();
-  console.log('Turned ON grow lights.');
+  console.log(`Turned ON Grow Lights ${ACCESS_TOKEN}`);
 }
 
 async function turnOff() {
   await actuator.turnOn();
-  console.log('Turned OFF grow lights.');
+  console.log(`Turned OFF Grow Lights ${ACCESS_TOKEN}`);
 }
