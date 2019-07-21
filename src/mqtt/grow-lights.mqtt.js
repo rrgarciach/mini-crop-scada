@@ -21,18 +21,12 @@ client.on('connect', async function () {
   // console.log('Attributes published!');
   client.subscribe('v1/devices/me/rpc/request/+', err => {
     if (err) throw err;
-    const requestId = 1;
-    const request = {
-      "method": "setGrowLights",
-      "params": {}
-    };
-    client.publish('v1/devices/me/rpc/request/' + requestId, JSON.stringify(request));
+    client.on('message', onMessage);
   });
 
 });
 
-client.on('message', async function (topic, message) {
-
+async function onMessage(topic, message) {
   console.log(`Grow Lights ${ACCESS_TOKEN} request.topic: ${topic}`);
   console.log(`Grow Lights ${ACCESS_TOKEN} request.body: ${message.toString()}`);
 
@@ -51,7 +45,7 @@ client.on('message', async function (topic, message) {
   }
   //client acts as an echo service
   client.publish('v1/devices/me/rpc/response/' + requestId, message);
-});
+}
 
 async function turnOn() {
   await actuator.turnOn();
