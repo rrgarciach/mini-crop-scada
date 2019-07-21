@@ -51,19 +51,20 @@ client.on('message', async function (topic, message) {
 });
 
 async function turnOn() {
-  await actuator.turnOn();
+  await actuator.turnOff(); // inverted to used normally closed relay on lights ON
   console.log(`Turned ON Grow Lights ${ACCESS_TOKEN}`);
 }
 
 async function turnOff() {
-  await actuator.turnOff();
+  await actuator.turnOn(); // inverted to used normally closed relay on lights ON
   console.log(`Turned OFF Grow Lights ${ACCESS_TOKEN}`);
 }
 
 const CronJob = require('cron').CronJob;
-new CronJob('0 2 4 * * *', async function () {
+new CronJob('0 0 8 * * *', async function () {
   return await turnOn();
 }, null, true, 'America/Mexico_City');
+
 new CronJob('0 0 0 * * *', async function () {
   return await turnOff();
 }, null, true, 'America/Mexico_City');
