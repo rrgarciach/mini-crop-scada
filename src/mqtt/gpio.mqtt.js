@@ -61,6 +61,7 @@ client.on('message', async function (topic, message) {
       console.error(e);
       throw e;
     }
+    setGpioStatus(pin, enabled);
   }
   client.publish(topic.replace('request', 'response'), getGpioStatus());
   client.publish('v1/devices/me/attributes', getGpioStatus());
@@ -68,4 +69,8 @@ client.on('message', async function (topic, message) {
 
 function getGpioStatus() {
   return JSON.stringify(gpioState);
+}
+
+function setGpioStatus(pin, status) {
+  if (gpioState['p' + pin]) gpioState['p' + pin] = status;
 }
