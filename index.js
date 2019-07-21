@@ -1,5 +1,5 @@
 require('dotenv').config();
 require('module-alias/register');
 
-require('@mqtt/hygrometer.mqtt.js');
-require('@mqtt/grow-lights.mqtt.js');
+const hygrometer = require('@mqtt/hygrometer.mqtt.js');
+const growLights = require('@mqtt/grow-lights.mqtt.js');
