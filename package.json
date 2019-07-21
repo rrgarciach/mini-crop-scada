@@ -21,6 +21,7 @@
     "@": ".",
     "@src": "./src",
     "@mqtt": "./src/mqtt",
-    "@sensors": "./src/sensors"
+    "@sensors": "./src/sensors",
+    "@actuators": "./src/actuators"
   }
 }

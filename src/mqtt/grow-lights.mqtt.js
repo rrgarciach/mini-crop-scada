@@ -5,7 +5,7 @@ const MQTT_PORT = process.env.THINGSBOARD_PORT || 1883;
 const PIN = process.env.GROW_LIGHTS_PIN;
 const ACCESS_TOKEN = process.env.GROW_LIGHTS_ACCESS_TOKEN;
 
-const actuator = require('@sensors/lights.sensor.js')(PIN);
+const actuator = require('@actuators/lights.sensor.js')(PIN);
 
 console.log(`Connecting to: ${MQTT_HOST}:${MQTT_PORT} using access token: ${ACCESS_TOKEN}...`);
 
