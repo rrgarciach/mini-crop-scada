@@ -34,4 +34,4 @@ class Actuator {
 
 }
 
-module.export = pin => new Actuator(pin);
+module.exports = pin => new Actuator(pin);
