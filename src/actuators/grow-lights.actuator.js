@@ -10,7 +10,7 @@ class Actuator {
 
     return gpio.setup(this.pin, gpio.DIR_OUT)
       .then(() => {
-        return gpio.write(this.pin, true);
+        return gpio.write(this.pin, false);
       })
       .catch(err => {
         console.error(err);
@@ -23,7 +23,7 @@ class Actuator {
 
     return gpio.setup(this.pin, gpio.DIR_OUT)
       .then(() => {
-        return gpio.write(this.pin, false);
+        return gpio.write(this.pin, true);
       })
       .catch(err => {
         console.error(err);

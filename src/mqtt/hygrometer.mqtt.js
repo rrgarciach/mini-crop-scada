@@ -24,7 +24,7 @@ async function readSensor() {
     temperature: temperature.toFixed(2),
     humidity: humidity.toFixed(2),
   };
-  console.log(data.temperature, data.humidity);
+  console.log(`${data.temperature} °C`, `${data.humidity} %`);
 
   client.publish('v1/devices/me/telemetry', JSON.stringify(data));
   console.log(`Hygrometer ${ACCESS_TOKEN} telemetry published!`);

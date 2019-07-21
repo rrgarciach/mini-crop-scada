@@ -51,6 +51,6 @@ async function turnOn() {
 }
 
 async function turnOff() {
-  await actuator.turnOn();
+  await actuator.turnOff();
   console.log(`Turned OFF Grow Lights ${ACCESS_TOKEN}`);
 }
