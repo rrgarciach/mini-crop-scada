@@ -21,28 +21,28 @@ client.on('connect', async function () {
   // console.log('Attributes published!');
   client.subscribe('v1/devices/me/rpc/request/+');
 
-  client.on('message', async function (topic, message) {
+});
 
-    console.log(`Grow Lights ${ACCESS_TOKEN} request.topic: ${topic}`);
-    console.log(`Grow Lights ${ACCESS_TOKEN} request.body: ${message.toString()}`);
+client.on('message', async function (topic, message) {
 
-    const requestId = topic.slice('v1/devices/me/rpc/request/'.length);
+  console.log(`Grow Lights ${ACCESS_TOKEN} request.topic: ${topic}`);
+  console.log(`Grow Lights ${ACCESS_TOKEN} request.body: ${message.toString()}`);
 
-    if (message.method === 'setGrowLights') {
-      const {state} = message.params;
-      switch (state) {
-        case 'on':
-          await turnOn();
-          break;
-        case 'off':
-          await turnOff();
-          break;
-      }
+  const requestId = topic.slice('v1/devices/me/rpc/request/'.length);
+
+  if (message.method === 'setGrowLights') {
+    const {state} = message.params;
+    switch (state) {
+      case 'on':
+        await turnOn();
+        break;
+      case 'off':
+        await turnOff();
+        break;
     }
-    //client acts as an echo service
-    client.publish('v1/devices/me/rpc/response/' + requestId, message);
-  });
-
+  }
+  //client acts as an echo service
+  client.publish('v1/devices/me/rpc/response/' + requestId, message);
 });
 
 async function turnOn() {
