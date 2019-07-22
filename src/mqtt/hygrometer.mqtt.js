@@ -15,19 +15,27 @@ const client = mqtt.connect('mqtt://' + MQTT_HOST, {
 
 client.on('connect', async function () {
   console.log(`Client Hygrometer ${ACCESS_TOKEN} connected to ${MQTT_HOST}!`);
-  await readSensor();
+  try {
+    await readSensor();
+  } catch (err) {
+    throw err;
+  }
 });
 
 async function readSensor() {
-  const {temperature, humidity} = await sensor.read(4);
-  const data = {
-    temperature: temperature.toFixed(2),
-    humidity: humidity.toFixed(2),
-  };
-  console.log(`${data.temperature}°C`, `${data.humidity}%`);
+  try {
+    const {temperature, humidity} = await sensor.read(4);
+    const data = {
+      temperature: temperature.toFixed(2),
+      humidity: humidity.toFixed(2),
+    };
+    console.log(`${data.temperature}°C`, `${data.humidity}%`);
 
-  client.publish('v1/devices/me/telemetry', JSON.stringify(data));
-  console.log(`Hygrometer ${ACCESS_TOKEN} telemetry published!`);
+    client.publish('v1/devices/me/telemetry', JSON.stringify(data));
+    console.log(`Hygrometer ${ACCESS_TOKEN} telemetry published!`);
 
-  setTimeout(readSensor, 10000);
+    setTimeout(readSensor, 10000);
+  } catch (err) {
+    console.error('Failed to read sensor data:', err);
+  }
 }
