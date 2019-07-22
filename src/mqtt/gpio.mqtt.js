@@ -32,7 +32,7 @@ const client = mqtt.connect('mqtt://' + MQTT_HOST, {
 });
 
 client.on('connect', async function () {
-  console.log(`Client Grow Lights ${ACCESS_TOKEN} connected to ${MQTT_HOST}!`);
+  console.log(`GPIO ${ACCESS_TOKEN} connected to ${MQTT_HOST}!`);
 
   client.subscribe('v1/devices/me/rpc/request/+', err => {
     if (err) throw err;
