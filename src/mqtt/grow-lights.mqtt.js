@@ -51,12 +51,12 @@ client.on('message', async function (topic, message) {
 });
 
 async function turnOn() {
-  await actuator.turnOff(); // inverted to used normally closed relay on lights ON
+  await actuator.turnOn();
   console.log(`Turned ON Grow Lights ${ACCESS_TOKEN}`);
 }
 
 async function turnOff() {
-  await actuator.turnOn(); // inverted to used normally closed relay on lights ON
+  await actuator.turnOff();
   console.log(`Turned OFF Grow Lights ${ACCESS_TOKEN}`);
 }
 

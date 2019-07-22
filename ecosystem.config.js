@@ -3,7 +3,7 @@ const config = {
     {
       name: 'device',
       script: './index.js',
-      max_memory_restart: '50M',
+      max_memory_restart: '150M',
       merge_logs: true,
     },
   ],
