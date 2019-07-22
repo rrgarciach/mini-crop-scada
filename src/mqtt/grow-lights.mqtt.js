@@ -61,10 +61,10 @@ async function turnOff() {
 }
 
 const CronJob = require('cron').CronJob;
-new CronJob('0 0 8 * * *', async function () {
+new CronJob('0 0 6 * * *', async function () {
   return await turnOn();
 }, null, true, 'America/Mexico_City');
 
-new CronJob('0 0 0 * * *', async function () {
+new CronJob('0 0 2 * * *', async function () {
   return await turnOff();
 }, null, true, 'America/Mexico_City');
