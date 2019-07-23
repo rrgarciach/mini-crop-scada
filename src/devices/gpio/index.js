@@ -28,6 +28,8 @@ const GPIO_INITIAL_STATE = {
   '40': false,
 };
 
+restoreGpioState();
+
 console.log(`Connecting to: ${MQTT_HOST}:${MQTT_PORT} using access token: ${ACCESS_TOKEN}...`);
 
 const client = mqtt.connect('mqtt://' + MQTT_HOST, {
@@ -75,6 +77,21 @@ client.on('message', async function (topic, payload) {
   client.publish('v1/devices/me/attributes', getGpioStatus());
 
 });
+
+function restoreGpioState() {
+  console.log('Restoring GPIO states...');
+  const gpioState = loadStoredState();
+  Object.keys(gpioState).map(async pin => {
+    const actuator = require('@actuators/gpio.actuator.js')(pin);
+    try {
+      return await actuator.turnOn();
+
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  });
+}
 
 function getGpioStatus() {
   const gpioState = loadStoredState();
