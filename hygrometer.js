@@ -1,4 +1,4 @@
 require('dotenv').config();
 require('module-alias/register');
 
-const hygrometer = require('@devices/hygrometer.devices.js');
+const hygrometer = require('@devices/hygrometer');
