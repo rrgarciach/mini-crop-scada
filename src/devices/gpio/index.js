@@ -1,8 +1,13 @@
 const mqtt = require('mqtt');
+require('dotenv').config();
+require('module-alias/register');
+
+const jsonStore = ('@src/lib/json-store');
 
 const MQTT_HOST = process.env.THINGSBOARD_HOST || 'demo.thingsboard.io';
 const MQTT_PORT = process.env.THINGSBOARD_PORT || 1883;
 const ACCESS_TOKEN = process.env.GPIO_ACCESS_TOKEN;
+const STATE_STORE_FILENAME = './state_store.json';
 
 let gpioState = {
   '7': false,
@@ -32,6 +37,7 @@ const client = mqtt.connect('mqtt://' + MQTT_HOST, {
 });
 
 client.on('connect', async function () {
+
   console.log(`GPIO ${ACCESS_TOKEN} connected to ${MQTT_HOST}!`);
 
   client.subscribe('v1/devices/me/rpc/request/+', err => {
@@ -50,7 +56,7 @@ client.on('message', async function (topic, payload) {
 
   if (message.method === 'setGpioStatus') {
     const {pin, enabled} = message.params;
-    console.log('setGpioStatus received!', pin, enabled)
+    console.log('method received:', message.method, pin, enabled);
 
     const actuator = require('@actuators/gpio.actuator.js')(pin);
     try {
@@ -65,14 +71,26 @@ client.on('message', async function (topic, payload) {
     }
     setGpioStatus(pin, enabled);
   }
+
   client.publish(topic.replace('request', 'response'), getGpioStatus());
   client.publish('v1/devices/me/attributes', getGpioStatus());
+
 });
 
 function getGpioStatus() {
+  const gpioState = loadStoredState();
   return JSON.stringify(gpioState);
 }
 
 function setGpioStatus(pin, status) {
   gpioState[pin] = status;
+  saveStoredState(gpioState);
+}
+
+function loadStoredState() {
+  gpioState = jsonStore.load(STATE_STORE_FILENAME);
+}
+
+function saveStoredState(data = gpioState) {
+  jsonStore.save(data, STATE_STORE_FILENAME);
 }

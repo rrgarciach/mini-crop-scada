@@ -1,9 +1,15 @@
 const config = {
   apps: [
     {
-      name: 'device',
-      script: './index.js',
-      max_memory_restart: '762M',
+      name: 'gpio',
+      script: './src/devices/gpio',
+      max_memory_restart: '512M',
+      merge_logs: true,
+    },
+    {
+      name: 'hygrometer',
+      script: './src/devices/hygrometer',
+      max_memory_restart: '512M',
       merge_logs: true,
     },
   ],

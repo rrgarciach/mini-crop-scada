@@ -1,4 +1,6 @@
 const mqtt = require('mqtt');
+require('dotenv').config();
+require('module-alias/register');
 
 const MQTT_HOST = process.env.THINGSBOARD_HOST || 'demo.thingsboard.io';
 const MQTT_PORT = process.env.THINGSBOARD_PORT || 1883;
@@ -22,7 +24,7 @@ client.on('connect', async function () {
   }
 });
 
-async function readSensor() {
+async function readSensor(count = 0) {
   try {
     const {temperature, humidity} = await sensor.read(4);
     const data = {
@@ -34,7 +36,7 @@ async function readSensor() {
     client.publish('v1/devices/me/telemetry', JSON.stringify(data));
     console.log(`Hygrometer ${ACCESS_TOKEN} telemetry published!`);
 
-    setTimeout(readSensor, 10000);
+    setTimeout(() => readSensor(++count), 10000);
   } catch (err) {
     console.error('Failed to read sensor data:', err);
   }
