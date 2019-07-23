@@ -36,7 +36,11 @@ async function readSensor(count = 0) {
     client.publish('v1/devices/me/telemetry', JSON.stringify(data));
     console.log(`Hygrometer ${ACCESS_TOKEN} telemetry published!`);
 
-    setTimeout(() => readSensor(++count), 10000);
+    setTimeout(async () => {
+      if (count > 100) process.exit();
+      await readSensor(++count);
+    }, 10000);
+
   } catch (err) {
     console.error('Failed to read sensor data:', err);
   }
