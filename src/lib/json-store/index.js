@@ -12,9 +12,10 @@ function save(data, fileName) {
 }
 
 function load(fileName, initialState = {}) {
-  console.log('_____', !fs.existsSync(fileName), !Object.keys(fs.readFileSync(fileName)).length)
   try {
-    if (!fs.existsSync(fileName) || !Object.keys(fs.readFileSync(fileName)).length) fs.writeFileSync(fileName, JSON.stringify(initialState));
+    if (!fs.existsSync(fileName) || !Object.keys(fs.readFileSync(fileName)).length) {
+      fs.writeFileSync(fileName, JSON.stringify(initialState));
+    }
     const rawData = fs.readFileSync(fileName);
     return JSON.parse(rawData);
 
