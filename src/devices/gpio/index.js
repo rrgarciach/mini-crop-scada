@@ -84,7 +84,10 @@ function restoreGpioState() {
   Object.keys(gpioState).map(async pin => {
     const actuator = require('@actuators/gpio.actuator.js')(pin);
     try {
-      return await actuator.turnOn();
+      if (gpioState[pin])
+        return await actuator.turnOn();
+      else
+        return await actuator.turnOff();
 
     } catch (e) {
       console.error(e);
