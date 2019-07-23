@@ -9,7 +9,12 @@ function save(data, fileName) {
 function load(fileName) {
   if (!fs.existsSync(fileName)) fs.writeFileSync(fileName, {}, {flag: 'w'});
   const rawData = fs.readFileSync(fileName);
-  return JSON.parse(rawData);
+  try {
+    return JSON.parse(rawData);
+
+  } catch (e) {
+    throw e;
+  }
 }
 
 module.exports = {
