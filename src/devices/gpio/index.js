@@ -2,7 +2,7 @@ const mqtt = require('mqtt');
 require('dotenv').config();
 require('module-alias/register');
 
-const jsonStore = ('@src/lib/json-store');
+const jsonStore = require('@src/lib/json-store');
 
 const MQTT_HOST = process.env.THINGSBOARD_HOST || 'demo.thingsboard.io';
 const MQTT_PORT = process.env.THINGSBOARD_PORT || 1883;
