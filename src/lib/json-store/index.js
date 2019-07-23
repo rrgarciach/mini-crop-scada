@@ -1,8 +1,8 @@
 const fs = require('fs');
+const _ = require('lodash');
 
 function save(data, fileName) {
   try {
-    if (!fs.existsSync(fileName)) fs.writeFileSync(fileName, JSON.stringify({}));
     const strData = JSON.stringify(data);
     fs.writeFileSync(fileName, strData);
 
@@ -11,9 +11,10 @@ function save(data, fileName) {
   }
 }
 
-function load(fileName) {
+function load(fileName, initialState = {}) {
+  console.log('_____', !fs.existsSync(fileName), _.isEmpty(fs.readFileSync(fileName)))
   try {
-    if (!fs.existsSync(fileName)) fs.writeFileSync(fileName, JSON.stringify({}));
+    if (!fs.existsSync(fileName) || _.isEmpty(fs.readFileSync(fileName))) fs.writeFileSync(fileName, JSON.stringify(initialState));
     const rawData = fs.readFileSync(fileName);
     return JSON.parse(rawData);
 
