@@ -3,9 +3,9 @@
   "repository": "https://github.com/rrgarciach/mini-crop-scada.git",
   "version": "1.0.0",
   "description": "SCADA system for mini aquaponics systems.",
-  "main": "index.js",
+  "main": "hygrometer.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
@@ -20,7 +20,7 @@
   "_moduleAliases": {
     "@": ".",
     "@src": "./src",
-    "@mqtt": "./src/mqtt",
+    "@devices": "./src/devices",
     "@sensors": "./src/sensors",
     "@actuators": "./src/actuators"
   }
