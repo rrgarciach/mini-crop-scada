@@ -8,7 +8,8 @@ const MQTT_HOST = process.env.THINGSBOARD_HOST || 'demo.thingsboard.io';
 const MQTT_PORT = process.env.THINGSBOARD_PORT || 1883;
 const ACCESS_TOKEN = process.env.GPIO_ACCESS_TOKEN;
 const STATE_STORE_FILENAME = './state_store.json';
-const GPIO_INITIAL_STATE = {
+
+let gpioState = {
   '7': false,
   '11': false,
   '12': false,
@@ -88,9 +89,10 @@ function setGpioStatus(pin, status) {
 }
 
 function loadStoredState() {
-  return jsonStore.load(STATE_STORE_FILENAME);
+  gpioState = jsonStore.load(STATE_STORE_FILENAME);
+  return gpioState;
 }
 
-function saveStoredState(data = GPIO_INITIAL_STATE) {
+function saveStoredState(data = gpioState) {
   jsonStore.save(data, STATE_STORE_FILENAME);
 }
