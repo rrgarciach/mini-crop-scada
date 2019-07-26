@@ -25,6 +25,11 @@ client.on('connect', async function () {
   }
 });
 
+client.on('error', err => {
+  console.error(err);
+  throw err;
+});
+
 async function readSensor(count = 0) {
   try {
     const {temperature, humidity} = await sensor.read(4);

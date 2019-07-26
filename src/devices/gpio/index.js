@@ -78,6 +78,11 @@ client.on('message', async function (topic, payload) {
 
 });
 
+client.on('error', err => {
+  console.error(err);
+  throw err;
+});
+
 function restoreGpioState() {
   console.log('Restoring GPIO states...');
   const gpioState = loadStoredState();
