@@ -115,3 +115,18 @@ function loadStoredState() {
 function saveStoredState(data = gpioState) {
   jsonStore.save(data, STATE_STORE_FILENAME);
 }
+
+const CronJob = require('cron').CronJob;
+new CronJob('0 0 6 * * *', function () {
+  return setGpioStatus(29, true);
+}, null, true, 'America/Mexico_City');
+new CronJob('0 1 6 * * *', function () {
+  return setGpioStatus(29, true);
+}, null, true, 'America/Mexico_City');
+
+new CronJob('0 0 2 * * *', function () {
+  return setGpioStatus(29, false);
+}, null, true, 'America/Mexico_City');
+new CronJob('0 1 2 * * *', function () {
+  return setGpioStatus(29, false);
+}, null, true, 'America/Mexico_City');
