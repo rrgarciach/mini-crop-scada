@@ -20,6 +20,7 @@ client.on('connect', async function () {
   try {
     await readSensor();
   } catch (err) {
+    console.log(err);
     throw err;
   }
 });
@@ -37,11 +38,16 @@ async function readSensor(count = 0) {
     console.log(`Hygrometer ${ACCESS_TOKEN} telemetry published!`);
 
     setTimeout(async () => {
-      if (count > 100) process.exit();
-      await readSensor(++count);
-    }, 10000);
+      if (count >= 100) process.exit();
+      try {
+        await readSensor(++count);
+      } catch (err) {
+        throw err;
+      }
+    }, 100);
 
   } catch (err) {
     console.error('Failed to read sensor data:', err);
+    throw err;
   }
 }
