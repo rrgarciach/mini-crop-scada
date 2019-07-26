@@ -121,27 +121,44 @@ function saveStoredState(data = gpioState) {
   jsonStore.save(data, STATE_STORE_FILENAME);
 }
 
+function turnOnLights() {
+  console.log('Turning ON grow lights...');
+  return setGpioStatus(29, true);
+}
+function turnOffLights() {
+  console.log('Turning OFF grow lights...');
+  return setGpioStatus(29, false);
+}
+function turnOnFertilizerPump() {
+  console.log('Turning ON fertilizer pump...');
+  return setGpioStatus(40, true);
+}
+function turnOffFertilizerPump() {
+  console.log('Turning OFF fertilizer pump...');
+  return setGpioStatus(40, false);
+}
+
 const CronJob = require('cron').CronJob;
 // grow lights
 new CronJob('0 0 6 * * *', function () {
-  return setGpioStatus(29, true);
+  turnOnLights();
 }, null, true, 'America/Mexico_City');
 new CronJob('0 1 6 * * *', function () {
-  return setGpioStatus(29, true);
+  turnOnLights();
 }, null, true, 'America/Mexico_City');
 
 new CronJob('0 0 2 * * *', function () {
-  return setGpioStatus(29, false);
+  turnOffLights();
 }, null, true, 'America/Mexico_City');
 new CronJob('0 1 2 * * *', function () {
-  return setGpioStatus(29, false);
+  turnOffLights();
 }, null, true, 'America/Mexico_City');
 
 // fertilizer pump
 new CronJob('0 0 * * * *', function () {
-  return setGpioStatus(40, true);
+  turnOnFertilizerPump();
 }, null, true, 'America/Mexico_City');
 
 new CronJob('0 15 * * * *', function () {
-  return setGpioStatus(40, false);
+  turnOffFertilizerPump();
 }, null, true, 'America/Mexico_City');
