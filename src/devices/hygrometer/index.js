@@ -21,13 +21,13 @@ client.on('connect', async function () {
     await readSensor();
   } catch (err) {
     console.log(err);
-    throw err;
+    return process.exit();
   }
 });
 
 client.on('error', err => {
   console.error(err);
-  throw err;
+  return process.exit();
 });
 
 async function readSensor(count = 0) {
@@ -47,12 +47,12 @@ async function readSensor(count = 0) {
       try {
         await readSensor(++count);
       } catch (err) {
-        throw err;
+        return process.exit();
       }
     }, 10000);
 
   } catch (err) {
     console.error('Failed to read sensor data:', err);
-    throw err;
+    return process.exit();
   }
 }
