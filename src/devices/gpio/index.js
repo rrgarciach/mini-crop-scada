@@ -122,6 +122,7 @@ function saveStoredState(data = gpioState) {
 }
 
 const CronJob = require('cron').CronJob;
+// grow lights
 new CronJob('0 0 6 * * *', function () {
   return setGpioStatus(29, true);
 }, null, true, 'America/Mexico_City');
@@ -134,4 +135,13 @@ new CronJob('0 0 2 * * *', function () {
 }, null, true, 'America/Mexico_City');
 new CronJob('0 1 2 * * *', function () {
   return setGpioStatus(29, false);
+}, null, true, 'America/Mexico_City');
+
+// fertilizer pump
+new CronJob('0 0 * * * *', function () {
+  return setGpioStatus(40, true);
+}, null, true, 'America/Mexico_City');
+
+new CronJob('0 15 * * * *', function () {
+  return setGpioStatus(40, false);
 }, null, true, 'America/Mexico_City');
