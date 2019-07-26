@@ -43,7 +43,7 @@ async function readSensor(count = 0) {
     console.log(`Hygrometer ${ACCESS_TOKEN} telemetry published!`);
 
     setTimeout(async () => {
-      if (count >= 10) return Promise.resolve();
+      if (count >= 10) return process.exit();
       try {
         await readSensor(++count);
       } catch (err) {
