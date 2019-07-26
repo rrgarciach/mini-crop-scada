@@ -123,18 +123,22 @@ function saveStoredState(data = gpioState) {
 
 function turnOnLights() {
   console.log('Turning ON grow lights...');
+  require('@actuators/gpio.actuator.js')(29).turnOn();
   return setGpioStatus(29, true);
 }
 function turnOffLights() {
   console.log('Turning OFF grow lights...');
+  require('@actuators/gpio.actuator.js')(29).turnOff();
   return setGpioStatus(29, false);
 }
 function turnOnFertilizerPump() {
   console.log('Turning ON fertilizer pump...');
+  require('@actuators/gpio.actuator.js')(40).turnOn();
   return setGpioStatus(40, true);
 }
 function turnOffFertilizerPump() {
   console.log('Turning OFF fertilizer pump...');
+  require('@actuators/gpio.actuator.js')(40).turnOff();
   return setGpioStatus(40, false);
 }
 
