@@ -44,7 +44,7 @@ async function readSensor(count = 0) {
       } catch (err) {
         throw err;
       }
-    }, 100);
+    }, 10000);
 
   } catch (err) {
     console.error('Failed to read sensor data:', err);
