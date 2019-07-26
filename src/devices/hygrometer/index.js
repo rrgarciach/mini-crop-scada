@@ -37,13 +37,13 @@ async function readSensor(count = 0) {
       temperature: temperature.toFixed(2),
       humidity: humidity.toFixed(2),
     };
-    console.log(`${data.temperature}°C`, `${data.humidity}%`, `iteration ${count}`);
+    console.log(`${data.temperature}°C`, `${data.humidity}%`, `count: ${count}`);
 
     client.publish('v1/devices/me/telemetry', JSON.stringify(data));
     console.log(`Hygrometer ${ACCESS_TOKEN} telemetry published!`);
 
     setTimeout(async () => {
-      if (count >= 100) process.exit();
+      if (count >= 10) return Promise.resolve();
       try {
         await readSensor(++count);
       } catch (err) {
