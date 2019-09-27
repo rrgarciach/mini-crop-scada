@@ -7,16 +7,17 @@ require('dotenv').config();
 require('module-alias/register');
 
 const DROPBOX_ACCESS_TOKEN = process.env.DROPBOX_ACCESS_TOKEN;
+const CAMERA_CAPTURE_DELAY = process.env.CAMERA_CAPTURE_DELAY;
 
-function capturePicture(device, labelName, delay = 60) {
+function capturePicture(device, labelName) {
 
-  const fileName = `${labelName}-${moment().format('YYYY-MM-DD-HH-mm-ss')}.jpg`;
+  const fileName = `${labelName}-${moment().format('YYYY-MM-DD-HH-mm')}.jpg`;
 
   const captureParams = {
     width: 1280,
     height: 720,
     quality: 100,
-    delay,
+    delay: CAMERA_CAPTURE_DELAY || 60,
     saveShots: true, // Save shots in memory
     output: 'jpeg', // [jpeg, png] support varies
     device: device,
