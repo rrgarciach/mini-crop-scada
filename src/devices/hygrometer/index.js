@@ -30,29 +30,18 @@ client.on('error', err => {
   return process.exit();
 });
 
-async function readSensor(temperature = 0, humidity = 0, count = 0, limit = 6) {
+async function readSensor(count = 0) {
   try {
-    const data = await sensor.read(4);
+    const {temperature, humidity} = await sensor.read(4);
+    const data = {
+      temperature: (temperature).toFixed(2),
+      humidity: (humidity).toFixed(2),
+    };
     console.log(`${data.temperature}°C`, `${data.humidity}%`, `count: ${count}`);
-    temperature += data.temperature;
-    humidity += data.humidity;
 
-    setTimeout(async () => {
-      if (count >= limit) {
-        const data = {
-          temperature: (temperature / limit).toFixed(2),
-          humidity: (humidity / limit).toFixed(2),
-        };
-        client.publish('v1/devices/me/telemetry', JSON.stringify(data));
-        console.log(`Hygrometer ${ACCESS_TOKEN} telemetry published!`);
-        return process.exit();
-      }
-      try {
-        await readSensor(temperature, humidity, ++count);
-      } catch (err) {
-        return process.exit();
-      }
-    }, 10000);
+    client.publish('v1/devices/me/telemetry', JSON.stringify(data));
+    console.log(`Hygrometer ${ACCESS_TOKEN} telemetry published!`, data);
+    return process.exit();
 
   } catch (err) {
     console.error('Failed to read sensor data:', err);
