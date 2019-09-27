@@ -8,9 +8,9 @@ require('module-alias/register');
 
 const DROPBOX_ACCESS_TOKEN = process.env.DROPBOX_ACCESS_TOKEN;
 
-function capturePicture(device) {
+function capturePicture(device, labelName) {
 
-  const fileName = `${moment().format('YYYY-MM-DD-HH-mm-ss')}.jpg`;
+  const fileName = `${labelName}-${moment().format('YYYY-MM-DD-HH-mm-ss')}.jpg`;
 
   const captureParams = {
     width: 1280,
@@ -24,7 +24,7 @@ function capturePicture(device) {
     verbose: true,
   };
 
-  NodeWebcam.capture(`./picture_${device}.jpg`, captureParams, function (err, buffer) {
+  NodeWebcam.capture(`./picture_${labelName}.jpg`, captureParams, function (err, buffer) {
     if (err) console.error(err);
     else {
       const bufferStream = new stream.PassThrough();

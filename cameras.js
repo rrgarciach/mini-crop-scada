@@ -6,5 +6,5 @@ const CAMERA_02 = process.env.CAMERA_02;
 
 const camera = require('@devices/camera');
 
-camera.capturePicture(CAMERA_01);
-camera.capturePicture(CAMERA_02);
+camera.capturePicture(CAMERA_01, 'A');
+camera.capturePicture(CAMERA_02, 'B');
