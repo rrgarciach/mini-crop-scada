@@ -1,12 +1,12 @@
 const NodeWebcam = require('node-webcam');
 const stream = require('stream');
 const moment = require('moment');
+const upload = require('dropbox-streaming-upload').default;
+
 require('dotenv').config();
 require('module-alias/register');
 
 const DROPBOX_ACCESS_TOKEN = process.env.DROPBOX_ACCESS_TOKEN;
-
-const upload = require('dropbox-streaming-upload').default;
 
 function capturePicture(device) {
 
