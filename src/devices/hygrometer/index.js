@@ -30,22 +30,25 @@ client.on('error', err => {
   return process.exit();
 });
 
-async function readSensor(count = 0) {
+async function readSensor(temperature = 0, humidity = 0, count = 0, limit = 6) {
   try {
-    const {temperature, humidity} = await sensor.read(4);
-    const data = {
-      temperature: temperature.toFixed(2),
-      humidity: humidity.toFixed(2),
-    };
+    const data = await sensor.read(4);
     console.log(`${data.temperature}°C`, `${data.humidity}%`, `count: ${count}`);
-
-    client.publish('v1/devices/me/telemetry', JSON.stringify(data));
-    console.log(`Hygrometer ${ACCESS_TOKEN} telemetry published!`);
+    temperature += data.temperature;
+    humidity += data.humidity;
 
     setTimeout(async () => {
-      if (count >= 100) return process.exit();
+      if (count >= limit) {
+        const data = {
+          temperature: (temperature / limit).toFixed(2),
+          humidity: (humidity / limit).toFixed(2),
+        };
+        client.publish('v1/devices/me/telemetry', JSON.stringify(data));
+        console.log(`Hygrometer ${ACCESS_TOKEN} telemetry published!`);
+        return process.exit();
+      }
       try {
-        await readSensor(++count);
+        await readSensor(temperature, humidity, ++count);
       } catch (err) {
         return process.exit();
       }
