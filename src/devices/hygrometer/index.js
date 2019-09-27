@@ -39,7 +39,7 @@ async function readSensor(count = 0) {
     };
     console.log(`${data.temperature}°C`, `${data.humidity}%`, `count: ${count}`);
 
-    client.publish('v1/devices/me/telemetry', JSON.stringify(data), undefined, () => {
+    client.publish('v1/devices/me/telemetry', JSON.stringify(data), undefined, err => {
       if (err) console.error(err);
       else console.log(`Hygrometer ${ACCESS_TOKEN} telemetry published!`, data);
       return process.exit();
