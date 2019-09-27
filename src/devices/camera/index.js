@@ -8,7 +8,7 @@ require('module-alias/register');
 
 const DROPBOX_ACCESS_TOKEN = process.env.DROPBOX_ACCESS_TOKEN;
 
-function capturePicture(device, labelName) {
+function capturePicture(device, labelName, delay = 60) {
 
   const fileName = `${labelName}-${moment().format('YYYY-MM-DD-HH-mm-ss')}.jpg`;
 
@@ -16,7 +16,7 @@ function capturePicture(device, labelName) {
     width: 1280,
     height: 720,
     quality: 100,
-    delay: 0,
+    delay,
     saveShots: true, // Save shots in memory
     output: 'jpeg', // [jpeg, png] support varies
     device: device,
