@@ -144,17 +144,17 @@ function turnOffFertilizerPump() {
 
 const CronJob = require('cron').CronJob;
 // grow lights
-new CronJob('0 0 6 * * *', function () {
+new CronJob('0 0 18 * * *', function () {
   turnOnLights();
 }, null, true, 'America/Mexico_City');
-new CronJob('0 1 6 * * *', function () {
+new CronJob('0 1 18 * * *', function () {
   turnOnLights();
 }, null, true, 'America/Mexico_City');
 
-new CronJob('0 0 2 * * *', function () {
+new CronJob('0 0 10 * * *', function () {
   turnOffLights();
 }, null, true, 'America/Mexico_City');
-new CronJob('0 1 2 * * *', function () {
+new CronJob('0 1 10 * * *', function () {
   turnOffLights();
 }, null, true, 'America/Mexico_City');
 
