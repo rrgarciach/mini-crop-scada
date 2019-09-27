@@ -10,44 +10,39 @@ const DROPBOX_ACCESS_TOKEN = process.env.DROPBOX_ACCESS_TOKEN;
 
 function capturePicture(device) {
 
-    const opts = {
-      width: 1280,
-      height: 720,
-      quality: 100,
-      delay: 0,
-      saveShots: true, // Save shots in memory
-      output: 'jpeg', // [jpeg, png] support varies
-      device: 'USB2.0 PC CAMERA',
-      callbackReturn: 'buffer',
-      verbose: true,
-    };
+  const fileName = `${moment().format('YYYY-MM-DD-HH-mm-ss')}.jpg`;
 
-    const Webcam = NodeWebcam.create(opts);
+  const captureParams = {
+    width: 1280,
+    height: 720,
+    quality: 100,
+    delay: 0,
+    saveShots: true, // Save shots in memory
+    output: 'jpeg', // [jpeg, png] support varies
+    device: device,
+    callbackReturn: 'buffer',
+    verbose: true,
+  };
 
-    Webcam.list(function (list) {
-      console.log('list', list);
-    });
+  NodeWebcam.capture(`./picture_${device}.jpg`, captureParams, function (err, buffer) {
+    if (err) console.error(err);
+    else {
+      const bufferStream = new stream.PassThrough();
+      bufferStream.end(buffer);
 
-    const path = `./${moment().format('YYYY-MM-DD-HH-mm')}.jpg`;
-    console.log('____',path)
+      const uploadParams = {
+        access_token: DROPBOX_ACCESS_TOKEN,
+        readable_stream: bufferStream,
+        file_size: buffer.length,
+        destination: `/${fileName}`,
+      };
 
-    // NodeWebcam.capture(path, opts, function (err, buffer) {
-    //   if (err) console.error(err);
-    //   else {
-    //     const bufferStream = new stream.PassThrough();
-    //     bufferStream.end(buffer);
-    //     const options = {
-    //       access_token: DROPBOX_ACCESS_TOKEN,
-    //       readable_stream: bufferStream,
-    //       file_size: buffer.length,
-    //       destination: '/prototype_02/01.jpg',
-    //     };
-    //     return upload(options).then(function (successMetadata) {
-    //     }, function (error) {
-    //       console.error(error);
-    //     })
-    //   }
-    // });
+      return upload(uploadParams).then(function (successMetadata) {
+      }, function (error) {
+        console.error(error);
+      })
+    }
+  });
 
 }
 
